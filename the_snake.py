@@ -40,6 +40,7 @@ clock = pygame.time.Clock()
 
 
 def handle_keys(game_object):
+    '''Function for choosing direction.'''
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -57,6 +58,7 @@ def handle_keys(game_object):
 
 # Тут опишите все классы игры.
 class GameObject:
+    '''Base class for defining other classes.'''
     def __init__(self,
                  position: tuple[int, int] = (0, 0),
                  body_color: tuple[int, int, int] = APPLE_COLOR) -> None:
@@ -68,27 +70,34 @@ class GameObject:
 
 
 class Apple(GameObject):
+    '''Apple class.'''
     def __init__(self,
                  body_color: tuple[int, int, int] = APPLE_COLOR) -> None:
+        '''Initialize the apple.'''
         self.randomize_position()
         super().__init__(self.position, body_color)
 
     def randomize_position(self) -> None:
+        '''Set random position of apple on the screen.'''
         self.position = (randint(0, 31) * 20, randint(0, 23) * 20)
 
     def draw(self) -> None:
+        '''Vizualise an apple.'''
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
     def get_pos(self) -> tuple:
+        '''Get the current position of apple'''
         return self.position
 
 
 class Snake(GameObject):
+    '''Class for manipulate snake.'''
     def __init__(self,
                  position: tuple[int, int] = (300, 220),
                  body_color: tuple[int, int, int] = SNAKE_COLOR) -> None:
+        '''Initialize the snake.'''
         super().__init__(position, body_color)
         self.length = 1
         self.positions = [self.position]
@@ -97,11 +106,13 @@ class Snake(GameObject):
         self.speed = GRID_SIZE
 
     def update_direction(self) -> None:
+        '''Function, that setting direction.'''
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
 
     def move(self) -> tuple:
+        '''Move the snake.'''
         x = self.positions[0][0] + self.direction[0] * self.speed
         y = self.positions[0][1] + self.direction[1] * self.speed
         if x < 0:
@@ -116,20 +127,27 @@ class Snake(GameObject):
         return self.positions.pop(-1)
 
     def draw(self) -> None:
+        '''Vizualise the snake.'''
         for position in self.positions:
             rect = (pygame.Rect(position, (GRID_SIZE, GRID_SIZE)))
             pygame.draw.rect(screen, self.body_color, rect)
             pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
     def get_head_position(self) -> tuple:
+        '''Getting the position of the head.'''
         return self.positions[0]
 
     def reset(self) -> None:
+        '''Setting the snake to default/start condition.'''
         if len(set(self.positions)) != len(self.positions):
             self.positions = [self.position]
 
 
 def main():
+    '''
+    Main function of the game.
+    Contains game algorithm.
+    '''
     # Инициализация PyGame:
     pygame.init()
     # Тут нужно создать экземпляры классов.
