@@ -58,8 +58,8 @@ def handle_keys(game_object):
 # Тут опишите все классы игры.
 class GameObject:
     def __init__(self,
-                 position: tuple[int, int],
-                 body_color: tuple[int, int, int]) -> None:
+                 position: tuple[int, int] = (0, 0),
+                 body_color: tuple[int, int, int] = APPLE_COLOR) -> None:
         self.position = position
         self.body_color = body_color
 
