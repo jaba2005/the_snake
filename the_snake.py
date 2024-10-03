@@ -63,10 +63,12 @@ class GameObject:
     def __init__(self,
                  position: tuple[int, int] = (0, 0),
                  body_color: tuple[int, int, int] = APPLE_COLOR) -> None:
+        """Initialize the GameObject"""
         self.position = position
         self.body_color = body_color
 
     def draw(self):
+        """Base draw method."""
         pass
 
 
