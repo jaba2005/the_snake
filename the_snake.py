@@ -37,10 +37,28 @@ pygame.display.set_caption('Змейка')
 
 # Настройка времени:
 clock = pygame.time.Clock()
+# поле 32х24 клетки
 
 
 # Тут опишите все классы игры.
-...
+class GameObject:
+    def __init__(self,
+                 position: tuple[int, int],
+                 body_color: tuple[int, int, int]) -> None:
+        self.position = position
+        self.body_color = body_color
+
+    def draw(self):
+        pass
+
+
+class Apple(GameObject):
+    def __init__(self,
+                 body_color: tuple[int, int, int] = APPLE_COLOR) -> None:
+        super().__init__(self.position, body_color)
+
+    def randomize_position(self) -> None:
+        self.position = (randint(0, 31), randint(0, 23))
 
 
 def main():
